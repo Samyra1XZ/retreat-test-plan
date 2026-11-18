@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<style>body{margin:0;font-size:14px}img{max-width:100%}</style>
+<title>Оживление базы Friendly Retreat</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Unbounded:wght@500;600&display=swap">
+<style>
+/* Layout: одна спокойная колонка-документ, шаги процесса — вертикальной лентой, воронка — полосами в масштабе */
+:root{
+  --bg:#f3f5f2; --surface:#ffffff; --fg:#1d2a27; --muted:#5d6b67; --line:#d9dfdb;
+  --accent:#2f6b5e; --accent-soft:#e1ece8; --warn:#9a6a1c; --warn-soft:#f6ecd9;
+  --display:"Unbounded","Onest",system-ui,sans-serif; --body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121816; --surface:#1a2220; --fg:#e4ebe8; --muted:#9aa8a3; --line:#2c3633;
+  --accent:#7cc0ad; --accent-soft:#1f3330; --warn:#e0b25e; --warn-soft:#33291a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121816; --surface:#1a2220; --fg:#e4ebe8; --muted:#9aa8a3; --line:#2c3633;
+  --accent:#7cc0ad; --accent-soft:#1f3330; --warn:#e0b25e; --warn-soft:#33291a; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:44px}
+h1,h2{font-family:var(--display);font-weight:600;letter-spacing:-.01em;text-wrap:balance;margin:0}
+h1{font-size:clamp(26px,5vw,36px);line-height:1.15}
+h2{font-size:19px;line-height:1.3}
+p{margin:0;max-width:65ch}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.lead{font-size:18px;color:var(--fg)}
+.muted{color:var(--muted)}
+section{display:grid;gap:16px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:0;border-left:2px solid var(--line);margin-left:9px}
+.steps li{position:relative;padding:0 0 18px 24px}
+.steps li:last-child{padding-bottom:0}
+.steps li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+.steps b{display:block;font-weight:600}
+.steps span{color:var(--muted)}
+.branch{margin-top:6px;font-size:14px;background:var(--accent-soft);border-radius:8px;padding:8px 12px;color:var(--fg);max-width:60ch}
+.funnel{display:grid;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
+.row{display:grid;grid-template-columns:150px 1fr 48px;align-items:center;gap:12px;font-variant-numeric:tabular-nums}
+.row .lab{font-size:14px}
+.bar{height:14px;background:var(--accent-soft);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:4px}
+.row .num{text-align:right;font-weight:600}
+.note{font-size:14px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:4px;min-width:0}
+.fact .k{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.fact .v{font-weight:600}
+.fact .v.big{font-family:var(--display);font-size:20px;line-height:1.25}
+.need{counter-reset:n;list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.need li{counter-increment:n;display:grid;grid-template-columns:30px 1fr;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.need li::before{content:counter(n);font-family:var(--display);font-weight:600;color:var(--accent);font-size:17px}
+.need b{display:block}
+.warnbox{background:var(--warn-soft);border-radius:10px;padding:12px 16px;font-size:15px}
+.warnbox b{color:var(--warn)}
+.chat{display:grid;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.chat .q{justify-self:end;max-width:85%;background:var(--accent);color:var(--bg);padding:8px 12px;border-radius:12px 12px 2px 12px;font-size:15px}
+.chat .a{justify-self:start;max-width:85%;background:var(--accent-soft);padding:8px 12px;border-radius:12px 12px 12px 2px;font-size:15px}
+.chat .sys{font-size:13px;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px}
+ul.plain{margin:0;padding-left:20px;display:grid;gap:6px;max-width:65ch}
+@media (max-width:480px){.row{grid-template-columns:110px 1fr 40px}}
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:14px">
+    <div class="eyebrow">Friendly Retreat · план теста</div>
+    <h1>ИИ-менеджер в Telegram для вашей базы</h1>
+    <p class="lead">Пишет людям из базы с аккаунта, где они уже есть, ведёт диалог до брони и передаёт готовых вашему менеджеру. Начинаем с маленького теста: один регион, один продукт.</p>
+  </header>
+
+  <section>
+    <h2>Как идёт один диалог</h2>
+    <ol class="steps">
+      <li><b>Первое сообщение</b><span>Лично человеку, по имени, без рекламы в лоб. У каждого свой вариант текста, одинаковой рассылки нет.</span></li>
+      <li><b>Человек отвечает</b><span>Бот заходит в сеть через 1–5 минут, печатает со скоростью человека, пишет стилем владельца аккаунта.</span></li>
+      <li><b>Квалификация и программа</b><span>Есть интерес — присылает программу. Нет интереса — одна мягкая попытка, дальше не давит.</span></li>
+      <li><b>Цена и сомнения</b><span>Называет цену только из ваших фактов, отвечает на вопросы, работает с «дорого» и «не знаю».</span>
+        <div class="branch">Вопрос, на который в фактах нет ответа, бот не выдумывает: замолкает и присылает его вам в пульт. Вы отвечаете голосом или текстом, бот пересказывает человеку и запоминает ответ на будущее.</div></li>
+      <li><b>Готов платить</b><span>Передаёт человека менеджеру. Оплату закрывает ваш менеджер, бот в этот момент молчит.</span></li>
+      <li><b>Отказ</b><span>Тепло закрывает. Если мешают даты — предлагает сообщить о следующем ретрите первым. Если не интересно — просит контакт того, кому может подойти.</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Как бот отвечает на сложное</h2>
+    <p class="muted">Реальные ответы бота на ваших фактах о йога-ретрите, проверка 18 ноября.</p>
+    <div class="chat">
+      <div class="q">30 тысяч за три дня йоги? Я дома по ютубу бесплатно занимаюсь</div>
+      <div class="a">Понимаю тебя, дома по видео тоже здорово заниматься)<br>На ретрите ценность в том, чтобы на три дня полностью уехать за город, отложить телефон и погрузиться в тишину, плюс работа вживую с преподавателями и психологами, проживание и питание уже внутри<br>А тебе сейчас вообще актуально так перезагрузиться и выдохнуть от городского ритма?</div>
+    </div>
+    <div class="chat">
+      <div class="q">Звучит классно, но в январе я улетаю</div>
+      <div class="a">Понимаю тебя)<br>У нас ретриты проходят каждый месяц, есть ближайшие даты в Подмосковье 4–6 декабря и 5–7 февраля<br>Скинуть тебе пока программу, чтобы просто посмотреть формат?</div>
+    </div>
+    <div class="chat">
+      <div class="q">Подумаю</div>
+      <div class="a">Конечно, спокойно подумай)<br>Скажи, а что именно хочется обдумать, даты или стоимость?</div>
+    </div>
+    <div class="chat">
+      <div class="q">А где именно проходит?</div>
+      <div class="a">Про точную локацию уточню и напишу, а пока лови программу</div>
+      <div class="sys">Точного места в фактах нет, поэтому бот не выдумывает. Вопрос сразу уходит вам в пульт, вы отвечаете голосом, бот пересказывает человеку и запоминает ответ.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Прошлый запуск в цифрах</h2>
+    <p class="muted">Тур на вулкан Иджен с Бали, ноябрь 2026. Бот писал знакомым организатора с его личного аккаунта.</p>
+    <div class="grid2">
+      <div class="fact"><span class="k">Ответили</span><span class="v big">120 из 170 · 71%</span><span class="muted" style="font-size:14px">рассылка, на которую отвечают семь из десяти</span></div>
+      <div class="fact"><span class="k">Узнали бота</span><span class="v big">4–5 из 120</span><span class="muted" style="font-size:14px">остальные общались как с организатором</span></div>
+      <div class="fact"><span class="k">Дошли до цены</span><span class="v big">29 человек</span><span class="muted" style="font-size:14px">бот сам провёл их от «привет» до стоимости и брони</span></div>
+      <div class="fact"><span class="k">Время организатора</span><span class="v big">только вопросы и оплаты</span><span class="muted" style="font-size:14px">остальную переписку вёл бот</span></div>
+    </div>
+    <div class="funnel">
+      <div class="note" style="margin-bottom:2px">Почему не купили — со слов самих людей</div>
+      <div class="row"><span class="lab">Не могу в эти даты</span><div class="bar"><i style="width:100%"></i></div><span class="num">~40%</span></div>
+      <div class="row"><span class="lab">Уже был / съезжу сам</span><div class="bar"><i style="width:40%"></i></div><span class="num">~16%</span></div>
+      <div class="row"><span class="lab">Дорого</span><div class="bar"><i style="width:27.5%"></i></div><span class="num">~11%</span></div>
+      <div class="note" style="margin-top:4px">Продукт был трудным: анонс за 2 недели до выезда, цена 350–450 $ при том, что самому туда можно съездить примерно за 120 $, а многие на этом вулкане уже были. Даже при этом с одной рассылки продали места на 630 $.</div>
+    </div>
+    <div class="warnbox"><b>Почему у вас условия лучше.</b> Ваши ретриты идут каждый месяц, поэтому «не в эти даты» превращается в «тогда на следующий». Прошлые участники уже знают формат и вам доверяют. Ретрит нельзя повторить самому за копейки. А до январских дат 6–9 недель, а не две.</div>
+    <p class="muted">Каждый день всё видно в таблице: кому написали, кто ответил, на каком этапе человек, что сказал. Вечером приходит отчёт в пульт.</p>
+  </section>
+
+  <section>
+    <h2>Предлагаем тест</h2>
+    <div class="grid2">
+      <div class="fact"><span class="k">Регион</span><span class="v">Москва и Подмосковье</span><span class="muted" style="font-size:14px">окончательно — по выгрузке базы</span></div>
+      <div class="fact"><span class="k">Продукт</span><span class="v">Йога-ретрит 22–24 января</span><span class="muted" style="font-size:14px">запасной: 3 дня в Подмосковье 15–17 января</span></div>
+      <div class="fact"><span class="k">Кому пишем первыми</span><span class="v">Кто уже был на ретритах</span><span class="muted" style="font-size:14px">дальше — оставлял заявку, но не купил</span></div>
+      <div class="fact"><span class="k">Объём</span><span class="v">500–1000 человек</span><span class="muted" style="font-size:14px">тех, с кем есть переписка в Telegram</span></div>
+      <div class="fact"><span class="k">Запуск</span><span class="v">3–5 дней после данных</span><span class="muted" style="font-size:14px">настройка, тексты, проверка на своих</span></div>
+      <div class="fact"><span class="k">Не трогаем</span><span class="v">Тех, кого ведёт менеджер</span><span class="muted" style="font-size:14px">отсекаем по дате заявки или открытой сделке</span></div>
+    </div>
+    <div class="warnbox"><b>Темп зависит от переписки.</b> Людям, с которыми аккаунт уже переписывался, можно писать много и быстро. Тем, кому пишем впервые, Telegram разрешает 10–30 новых в день с одного прогретого аккаунта. Поэтому важно понять, где у вас реально была переписка.</div>
+  </section>
+
+  <section>
+    <h2>Что нужно от вас, чтобы начать</h2>
+    <ol class="need">
+      <li><div><b>Выгрузка базы из amoCRM в таблицу</b><span class="muted">Имя, телефон, ник в Telegram, регион, дата заявки, на какой ретрит, был ли на ретрите (какой, когда), когда и где последний контакт, с какого аккаунта. Плюс таблица прошедших ретритов.</span></div></li>
+      <li><div><b>Аккаунты менеджеров</b><span class="muted">С каких Telegram-аккаунтов писали клиентам, сколько их, есть ли доступ и Premium, сохранены ли клиенты в контактах.</span></div></li>
+      <li><div><b>Правило «не трогать»</b><span class="muted">Как отличить людей, с которыми сейчас работает менеджер.</span></div></li>
+      <li><div><b>Менеджер в чате</b><span class="muted">Ему бот передаёт готовых к оплате.</span></div></li>
+    </ol>
+    <p class="muted">После выгрузки за день разбираем базу: сколько людей реально доступно, какой сегмент первым, и присылаем условия.</p>
+  </section>
+
+  <section>
+    <h2>Контроль и безопасность</h2>
+    <ul class="plain">
+      <li>Бот пишет только тем, кто в отдельной папке на аккаунте. Проверка перед каждым сообщением, вне папки отправить нельзя.</li>
+      <li>Таблица со статистикой может лежать в вашем Google Drive, мы в ней редакторы.</li>
+      <li>Пауза рассылки в один клик в пульте. Если Telegram предупреждает об ограничении, бот сам останавливается.</li>
+      <li>Цены, даты и условия — только из ваших фактов. Чего нет в фактах, бот не обещает и зовёт вас.</li>
+    </ul>
+  </section>
+</div>
+
+</html>
